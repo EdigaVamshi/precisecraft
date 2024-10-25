@@ -164,7 +164,7 @@ app.get('/test3', async (req,res) => {
     res.json(builds);
 })
 
-const port= 4000 || process.env.PORT;
+const port = process.env.PORT;
 app.listen(port, () => {
     console.log(`App running on port ${port}`);
 });
