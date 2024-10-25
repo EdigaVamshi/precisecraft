@@ -1,4 +1,5 @@
 // server.js
+require('dotenv').config();
 const express = require('express');
 const connectDB = require('./db.js');
 const buildModel = require('./models/Build.js');
@@ -33,7 +34,7 @@ connectDB();
 
 // delbuild();
 
-const secretKey='notasecret';
+const secretKey=process.env.JWT_SECRET;
 const verifyToken= (req, res, next) => {
     const token=req.headers['authorization'];
     if(!token){

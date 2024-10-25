@@ -1,8 +1,9 @@
+require('dotenv').config();
 const mongoose=require('mongoose')
 
 const connectDB = async () => {
     try{
-        const con = await mongoose.connect('mongodb+srv://Admin:iamadmin@cluster0.idparla.mongodb.net/pctest?retryWrites=true&w=majority&appName=Cluster0');
+        const con = await mongoose.connect(process.env.MONGO_URL);
         console.log('Mongo connected')
     } catch(err){
         console.log(err);
