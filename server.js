@@ -112,8 +112,11 @@ app.get('/test', async (req, res) => {
 app.post('/admin', upload.single('img'), async (req, res) => {
     try {
         const { name, description, price, rating, category } = req.body;
-        const img=req.file.path;
-        const newBuild=new buildModel({name,rating,description,price,img,category});
+        if (!req.file) {
+            return res.status(400).json({ error: 'Image is required' });
+        }
+        const imgUrl=req.file.path;
+        const newBuild=new buildModel({name,description,price,rating,img:imgUrl,category});
         await newBuild.save();
         res.json(newBuild);
     } catch (error) {
