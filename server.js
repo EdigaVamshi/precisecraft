@@ -113,7 +113,7 @@ app.post('/admin', upload.single('img'), async (req, res) => {
     try {
         const { name, description, price, rating, category } = req.body;
         const img=req.file.path;
-        const newBuild=new buildModel({name,description,rating,price,img,category});
+        const newBuild=new buildModel({name,rating,description,price,img,category});
         await newBuild.save();
         res.json(newBuild);
     } catch (error) {
