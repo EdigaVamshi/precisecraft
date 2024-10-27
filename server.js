@@ -7,7 +7,7 @@ const buildModel = require('./models/Build.js');
 const cors = require('cors');
 const multer = require('multer');
 const { storage } = require('./cloudinaryConfig');
-// const upload = multer({ storage });
+const upload = multer({ storage });
 const bcrypt=require('bcryptjs');
 const jwt=require('jsonwebtoken');
 
@@ -109,14 +109,17 @@ app.get('/test', async (req, res) => {
 //     }
 // })
 
-// app.post('/admin', upload.single('img'), async (req, res) => {
-//     try {
-//         const { name, rating, description, price, category } = req.body;
-//         console.log(req.body);
-//     } catch (error) {
-//         res.status(500).json({ error: 'Failed to create build' });
-//     }
-// });
+app.post('/admin', upload.single('img'), async (req, res) => {
+    try {
+        const { name, description, price, rating, category } = req.body;
+        const img=req.file.path;
+        const newBuild=new buildModel({name,description,rating,price,img,category});
+        await newBuild.save();
+        res.json(newBuild);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to create build' });
+    }
+});
 
 // Route to get cart items for a specific user
 app.get('/cart', async (req, res) => {
